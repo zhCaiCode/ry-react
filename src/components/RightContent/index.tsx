@@ -9,6 +9,7 @@ export const SelectLang = () => {
     <UmiSelectLang
       style={{
         padding: 4,
+        display: 'none'
       }}
     />
   );
@@ -18,8 +19,8 @@ export const Question = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        height: 26,
+        display: 'none',
+        height: 26
       }}
       onClick={() => {
         window.open('https://pro.ant.design/docs/getting-started');
