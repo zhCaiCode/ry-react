@@ -118,3 +118,8 @@ export namespace API {
     currentAuthority: string;
   };
 }
+declare global {
+  interface Window {
+    _htmlFontSize: number
+  }
+}
