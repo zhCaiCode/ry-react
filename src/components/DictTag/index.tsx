@@ -60,7 +60,7 @@ const DictTag: React.FC<DictTagProps> = (props) => {
         }
         if (props.enums) {
             const item = props.enums[value];
-            return item.label;
+            return item?.label ?? '';
         }
         if (props.options) {
             if (!Array.isArray(props.options)) {
@@ -68,8 +68,8 @@ const DictTag: React.FC<DictTagProps> = (props) => {
                 return '';
             }
             for (const item of props.options) {
-                if (item.value === value) {
-                    return item.text;
+                if (item?.value === value) {
+                    return item?.text ?? '';
                 }
             }
         }
@@ -82,7 +82,7 @@ const DictTag: React.FC<DictTagProps> = (props) => {
         }
         if (props.enums) {
             const item = props.enums[value];
-            return item.listClass || 'default';
+            return item?.listClass || 'default';
         }
         if (props.options) {
             if (!Array.isArray(props.options)) {
@@ -90,8 +90,8 @@ const DictTag: React.FC<DictTagProps> = (props) => {
                 return 'default';
             }
             for (const item of props.options) {
-                if (item.value === value) {
-                    return item.listClass || 'default';
+                if (item?.value === value) {
+                    return item?.listClass || 'default';
                 }
             }
         }
