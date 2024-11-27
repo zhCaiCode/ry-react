@@ -182,10 +182,10 @@ const LogininforTableList: React.FC = () => {
     <PageContainer>
       <div style={{ width: '100%', float: 'right' }}>
         <ProTable<API.Monitor.Logininfor>
-          headerTitle={intl.formatMessage({
-            id: 'pages.searchTable.title',
-            defaultMessage: '信息',
-          })}
+          // headerTitle={intl.formatMessage({
+          //   id: 'pages.searchTable.title',
+          //   defaultMessage: '信息',
+          // })}
           actionRef={actionRef}
           formRef={formTableRef}
           rowKey="infoId"
@@ -264,17 +264,17 @@ const LogininforTableList: React.FC = () => {
               <UnlockOutlined />
               <FormattedMessage id="monitor.logininfor.unlock" defaultMessage="解锁" />
             </Button>,
-            <Button
-              type="primary"
-              key="export"
-              hidden={!access.hasPerms('monitor:logininfor:export')}
-              onClick={async () => {
-                handleExport();
-              }}
-            >
-              <PlusOutlined />
-              <FormattedMessage id="pages.searchTable.export" defaultMessage="导出" />
-            </Button>,
+            // <Button
+            //   type="primary"
+            //   key="export"
+            //   hidden={!access.hasPerms('monitor:logininfor:export')}
+            //   onClick={async () => {
+            //     handleExport();
+            //   }}
+            // >
+            //   <PlusOutlined />
+            //   <FormattedMessage id="pages.searchTable.export" defaultMessage="导出" />
+            // </Button>,
           ]}
           request={(params) =>
             getLogininforList({ ...params } as API.Monitor.LogininforListParams).then((res) => {
