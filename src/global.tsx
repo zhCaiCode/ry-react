@@ -1,6 +1,7 @@
 import { useIntl } from '@umijs/max';
 import { Button, message, notification } from 'antd';
 import defaultSettings from '../config/defaultSettings';
+import { pxtorem } from './utils/utils';
 
 const { pwa } = defaultSettings;
 const isHttps = document.location.protocol === 'https:';
@@ -89,3 +90,7 @@ if (pwa) {
 
   clearCache();
 }
+
+setTimeout(() => {
+  pxtorem();
+}, 0);
