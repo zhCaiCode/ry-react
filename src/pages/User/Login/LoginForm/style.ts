@@ -4,7 +4,7 @@ export const LoginWrapper = styled.div`
   height: 100%;
 
   .txt-login {
-    font-size: ${getRem(28)};
+    font-size: ${getRem(24)};
     font-weight: 700;
     color: #000;
     margin-block-start: 1em;
@@ -35,7 +35,7 @@ export const LoginWrapper = styled.div`
       text-align: center;
       color: #000;
       font-family: Poppins-SemiBold;
-      font-size: ${getRem(28)};
+      font-size: ${getRem(36)};
       font-weight: 700;
       line-height: ${getRem(120)};
     }
