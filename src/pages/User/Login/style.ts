@@ -19,7 +19,7 @@ export const LoginBox = styled.div`
   height: ${getRem(798)};
   margin: auto;
   background-image: url('/assets/images/bg_login_form.webp');
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   overflow: hidden;
 `;
