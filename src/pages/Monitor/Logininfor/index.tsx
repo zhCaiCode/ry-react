@@ -162,7 +162,7 @@ const LogininforTableList: React.FC = () => {
       dataIndex: 'status',
       valueType: 'select',
       render: (_, record) => {
-        return (<DictTag enums={statusOptions} value={record.status} />);
+        return (<>{record ? <DictTag enums={statusOptions} value={record.status} /> : null}</>);
       },
     },
     {
@@ -279,7 +279,7 @@ const LogininforTableList: React.FC = () => {
           request={(params) =>
             getLogininforList({ ...params } as API.Monitor.LogininforListParams).then((res) => {
               const result = {
-                data: res.rows,
+                data: res?.rows || [],
                 total: res.total,
                 success: true,
               };

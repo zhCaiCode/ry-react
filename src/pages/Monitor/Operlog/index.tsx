@@ -149,7 +149,7 @@ const OperlogTableList: React.FC = () => {
       valueType: 'select',
       valueEnum: businessTypeOptions,
       render: (_, record) => {
-        return (<DictTag enums={businessTypeOptions} value={record.businessType} />);
+        return (<>{record ? <DictTag enums={businessTypeOptions} value={record.businessType} /> : null}</>);
       },
     },
     {
