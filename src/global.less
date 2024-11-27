@@ -1,12 +1,26 @@
+@font-face {
+  font-family: 'Poppins-SemiBold';
+  src: url('../public/assets/styles/Poppins/Poppins-SemiBold.ttf') format('truetype');
+  font-display: fallback;
+}
+@font-face {
+  font-family: 'Poppins-Light';
+  src: url('../public/assets/styles/Poppins/Poppins-Light.ttf') format('truetype');
+  font-display: fallback;
+}
+@font-face {
+  font-family: 'Poppins-Regular';
+  src: url('../public/assets/styles/Poppins/Poppins-Regular.ttf') format('truetype');
+  font-display: fallback;
+}
+
 html,
 body,
 #root {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-    'Noto Color Emoji';
+  font-family: Poppins-Regular, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
 
 .colorWeak {
@@ -50,4 +64,52 @@ ol {
       }
     }
   }
+}
+.ant-layout-header,.ant-pro-global-header{
+  height: 7.5rem!important;
+}
+.ant-pro-layout .ant-pro-sider.ant-pro-sider-fixed-mix{
+  height: calc(100% - 7.5rem)!important;
+}
+.ant-pro-layout .ant-pro-sider.ant-pro-sider-fixed-mix{
+  inset-block-start:7.5rem!important;
+}
+.ant-pro-layout .ant-pro-layout-bg-list{
+  background: inherit!important;
+}
+.ant-pro-global-header{
+  background: linear-gradient(to right, #15367f 70%, #844769 )!important;
+  margin-inline:0!important;
+}
+.ant-pro-global-header-logo h1,
+.ant-pro-global-header-header-actions-item >*:hover,
+.ant-pro-global-header-header-actions-item svg,
+.ant-pro-global-header-header-actions-avatar >div{
+  color:rgba(255, 255, 255, 0.9)!important;
+}
+.ant-pro-global-header-header-actions-avatar >div{
+  font-size: 16px;
+}
+:where(.css-dev-only-do-not-override-dag3b9).ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-dag3b9).ant-table-wrapper .ant-table-thead >tr>td{
+  background: #f5f8fa!important;
+}
+th.ant-table-cell{
+  height: 3.75rem!important;
+  color: #494949!important;
+  font-size: 0.875rem!important;
+}
+.ant-pro-query-filter.ant-pro-query-filter{
+  padding: 0.5rem!important;
+}
+.ant-pro-table-list-toolbar-container{
+  padding-block: 0.5rem!important;
+}
+:where(.css-dev-only-do-not-override-1x7el0i).ant-menu-light .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1x7el0i).ant-menu-light>.ant-menu .ant-menu-item-selected{
+  color: #1890FF;
+  background-color: #fff!important;
+}
+:where(.css-dev-only-do-not-override-1x7el0i).ant-menu,
+:where(.css-dev-only-do-not-override-1x7el0i).ant-menu, .ant-table-cell, .ant-table-cell-row-hover
+{
+  font-family: Poppins-Regular!important;
 }
