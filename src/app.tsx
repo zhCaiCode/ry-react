@@ -1,7 +1,8 @@
 import { Footer, Question, SelectLang, AvatarDropdown, AvatarName } from '@/components';
 import { LinkOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
-import { SettingDrawer } from '@ant-design/pro-components';
+import { Suspense } from 'react';
+// import { SettingDrawer } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
@@ -131,18 +132,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       // if (initialState?.loading) return <PageLoading />;
       return (
         <>
-          {children}
-          <SettingDrawer
-            disableUrlParams
-            enableDarkTheme
-            settings={initialState?.settings}
-            onSettingChange={(settings) => {
-              setInitialState((preInitialState) => ({
-                ...preInitialState,
-                settings,
-              }));
-            }}
-          />
+          <Suspense fallback={<div>loading...</div>}>{children}</Suspense>
         </>
       );
     },
@@ -152,8 +142,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
 
 export async function onRouteChange({ clientRoutes, location }) {
   const menus = getRemoteMenu();
- // console.log('onRouteChange', clientRoutes, location, menus);
-  if(menus === null && location.pathname !== PageEnum.LOGIN) {
+  // console.log('onRouteChange', clientRoutes, location, menus);
+  if (menus === null && location.pathname !== PageEnum.LOGIN) {
     console.log('refresh')
     history.go(0);
   }
@@ -172,14 +162,16 @@ export async function patchClientRoutes({ routes }) {
 export function render(oldRender: () => void) {
   // console.log('render get routers', oldRender)
   const token = getAccessToken();
-  if(!token || token?.length === 0) {
+  if (!token || token?.length === 0) {
     oldRender();
     return;
   }
-  getRoutersInfo().then(res => {
-    setRemoteMenu(res);
-    oldRender()
-  });
+  setTimeout(() => {
+    getRoutersInfo().then(res => {
+      setRemoteMenu(res);
+      oldRender()
+    });
+  }, 0);
 }
 
 /**
