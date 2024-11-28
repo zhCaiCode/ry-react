@@ -6,7 +6,7 @@ import { useMemo } from 'react'
 import { UserOutlined, LockOutlined, VerifiedOutlined } from '@ant-design/icons'
 import { getCaptchaImg, login } from '@/services/system/auth'
 import { useForm } from 'antd/es/form/Form'
-import { useIntl, useModel,history } from '@umijs/max'
+import { useIntl, useModel, history } from '@umijs/max'
 // import { setToken } from '@/utils/auth'
 import { clearSessionToken, setSessionToken } from '@/access'
 import { flushSync } from 'react-dom'
@@ -33,13 +33,14 @@ const LoginForm: FC<IProps> = () => {
 	// const [userLoginState, setUserLoginState] = useState<API.LoginResult>({code: 200});
 	// const [type, setType] = useState<string>('account');
 	const [uuid, setUuid] = useState<string>('')
+	const [loading, setLoading] = useState(false)
 	// const navigator = useNavigate()
 	const [form] = useForm()
 	const intl = useIntl();
 	const { initialState, setInitialState } = useModel('@@initialState');
 	const fields = useMemo<Array<{
 		name: string
-		label:string
+		label: string
 		prefix?: ReactNode
 		col: { span: number }
 		rules: any[]
@@ -87,96 +88,51 @@ const LoginForm: FC<IProps> = () => {
 	const fetchUserInfo = async () => {
 		const userInfo = await initialState?.fetchUserInfo?.();
 		if (userInfo) {
-		  flushSync(() => {
-			setInitialState((s) => ({
-			  ...s,
-			  currentUser: userInfo,
-			}));
-		  });
+			flushSync(() => {
+				setInitialState((s) => ({
+					...s,
+					currentUser: userInfo,
+				}));
+			});
 		}
-	  };
-	// const handleLoginResponse = useCallback(
-	// 	async (response: API.Login_Response) => {
-	// 			 try{
-	// 				console.log(response)
-	// 			const { code, msg, token } = response
-	// 			if (code === 200) {
-	// 				// 登录成功
-	// 				// message.success('登录成功')
-	// 				const defaultLoginSuccessMessage = intl.formatMessage({
-	// 					id: 'pages.login.success',
-	// 					defaultMessage: '登录成功！',
-	// 				});
-	// 				// 处理token
-	// 				const current = new Date();
-	// 				const expireTime = current.setTime(current.getTime() + 1000 * 12 * 60 * 60);
-	// 				console.log('login response: ', response);
-	// 				setSessionToken(response?.token, response?.token, expireTime);
-	// 				message.success(defaultLoginSuccessMessage);
-	// 				//   setToken(token)
-	// 				await fetchUserInfo();
-	// 				// 跳转到首页
-	// 				// navigator('/home/dashboard')
-	// 				// const urlParams = new URL(window.location.href).searchParams;
-	// 				// history.push(urlParams.get('redirect') || '/');
-	// 				history.push('/')
-	// 			} else {
-	// 				console.log(response.msg);
-	// 				clearSessionToken();
-	// 				// 如果失败去设置用户错误信息
-	// 				setUserLoginState({ ...response });
-	// 				getVerify();
-	// 			  }
-	// 			 } catch (error) {
-	// 				const defaultLoginFailureMessage = intl.formatMessage({
-	// 				  id: 'pages.login.failure',
-	// 				  defaultMessage: '登录失败，请重试！',
-	// 				});
-	// 				console.log(error);
-	// 				message.error(defaultLoginFailureMessage);
-	// 			  }
-	// 	},
-	// 	[navigator]
-	// )
+	};
 
 	const onFinish = useCallback(
 		async (values: API.LoginParams) => {
-			// console.log('表单值:', values)
-			// const response = await login({ uuid, ...values })
-			// handleLoginResponse(response)
 			try {
-				// 登录
+				setLoading(true);
 				const response = await login({ ...values, uuid });
 				if (response.code === 200) {
-				  const defaultLoginSuccessMessage = intl.formatMessage({
-					id: 'pages.login.success',
-					defaultMessage: '登录成功！',
-				  });
-				  const current = new Date();
-				  const expireTime = current.setTime(current.getTime() + 1000 * 12 * 60 * 60);
-				  console.log('login response: ', response);
-				  setSessionToken(response?.token, response?.token, expireTime);
-				  message.success(defaultLoginSuccessMessage);
-				  await fetchUserInfo();
-				  console.log('login ok');
-				  const urlParams = new URL(window.location.href).searchParams;
-				  history.push(urlParams.get('redirect') || '/');
-				  return;
+					const defaultLoginSuccessMessage = intl.formatMessage({
+						id: 'pages.login.success',
+						defaultMessage: '登录成功！',
+					});
+					const current = new Date();
+					const expireTime = current.setTime(current.getTime() + 1000 * 12 * 60 * 60);
+					console.log('login response: ', response);
+					setSessionToken(response?.token, response?.token, expireTime);
+					message.success(defaultLoginSuccessMessage);
+					await fetchUserInfo();
+					console.log('login ok');
+					const urlParams = new URL(window.location.href).searchParams;
+					history.push(urlParams.get('redirect') || '/');
+					return;
 				} else {
-				  console.log(response.msg);
-				  clearSessionToken();
-				  // 如果失败去设置用户错误信息
-				//   setUserLoginState({ ...response });
-				  getVerify();
+					clearSessionToken();
+					// 如果失败去设置用户错误信息
+					//   setUserLoginState({ ...response });
+					getVerify();
+					throw new Error(response.msg);
 				}
-			  } catch (error) {
-				const defaultLoginFailureMessage = intl.formatMessage({
-				  id: 'pages.login.failure',
-				  defaultMessage: '登录失败，请重试！',
+			} catch (error: any) {
+				setLoading(false);
+				const defaultLoginFailureMessage = error?.message || intl.formatMessage({
+					id: 'pages.login.failure',
+					defaultMessage: '登录失败，请重试！',
 				});
-				console.log(error);
+				console.log('catch', error.message);
 				message.error(defaultLoginFailureMessage);
-			  }
+			}
 		},
 		[uuid]
 	)
@@ -205,7 +161,7 @@ const LoginForm: FC<IProps> = () => {
 									<Row key={item.name}>
 										<Col span={16}>
 											<Form.Item<FieldType> wrapperCol={item.col} name={item.name} rules={item.rules}>
-												<Input prefix={item.prefix} onKeyUp={(e)=>{handleKeyUp(e as any)}} />
+												<Input prefix={item.prefix} onKeyUp={(e) => { handleKeyUp(e as any) }} />
 											</Form.Item>
 										</Col>
 										<Col span={8}>
@@ -223,7 +179,7 @@ const LoginForm: FC<IProps> = () => {
 							)
 						})}
 						<Form.Item wrapperCol={{ span: 24 }}>
-							<Button type='primary' size='large' style={{ width: '100%' }} className='btn-login' htmlType='submit'>
+							<Button type='primary' size='large' style={{ width: '100%' }} className='btn-login' loading={loading} htmlType='submit'>
 								登录
 							</Button>
 						</Form.Item>
