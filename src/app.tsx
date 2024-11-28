@@ -139,7 +139,14 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     ...initialState?.settings,
   };
 };
-
+async function nextStep(res: any, ...args: any) {
+  await setRemoteMenu(res);
+  for (const func of args) {
+    if (func && typeof func === 'function') {
+      func()
+    }
+  }
+}
 export async function onRouteChange({ clientRoutes, location }) {
   const menus = getRemoteMenu();
   // console.log('onRouteChange', clientRoutes, location, menus);
@@ -166,13 +173,14 @@ export function render(oldRender: () => void) {
     oldRender();
     return;
   }
-  setTimeout(() => {
-    getRoutersInfo().then(res => {
-      setRemoteMenu(res);
-      oldRender()
-    });
-  }, 0);
+
+  getRoutersInfo().then(res => {
+    // setRemoteMenu(res);
+    // oldRender()
+    nextStep(res, oldRender)
+  });
 }
+
 
 /**
  * @name request 配置，可以配置错误处理
