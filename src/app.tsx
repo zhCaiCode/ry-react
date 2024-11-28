@@ -69,7 +69,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       src: initialState?.currentUser?.avatar,
       title: <AvatarName />,
       render: (_, avatarChildren) => {
-        return <AvatarDropdown menu="True">{avatarChildren}</AvatarDropdown>;
+        return <AvatarDropdown menu={true}>{avatarChildren}</AvatarDropdown>;
       },
     },
     waterMarkProps: {
@@ -116,14 +116,14 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         width: '331px',
       },
     ],
-    links: isDev
-      ? [
-        <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
-          <LinkOutlined />
-          <span>OpenAPI 文档</span>
-        </Link>,
-      ]
-      : [],
+    // links: isDev
+    //   ? [
+    //     <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
+    //       <LinkOutlined />
+    //       <span>OpenAPI 文档</span>
+    //     </Link>,
+    //   ]
+    //   : [],
     menuHeaderRender: undefined,
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
