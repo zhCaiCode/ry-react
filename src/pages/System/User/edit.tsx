@@ -71,7 +71,9 @@ const UserForm: React.FC<UserFormProps> = (props) => {
     props.onCancel();
   };
   const handleFinish = async (values: Record<string, any>) => {
-    props.onSubmit(values as UserFormData);
+    const formData = { ...values as UserFormData }
+    if (props?.values?.userId) formData.userId = props.values.userId;
+    props.onSubmit(formData);
   };
 
   return (
