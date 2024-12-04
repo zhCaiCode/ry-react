@@ -12,6 +12,7 @@ import { getRemoteMenu, getRoutersInfo, getUserInfo, patchRouteWithRemoteMenus, 
 import { PageEnum } from './enums/pagesEnums';
 
 
+
 const isDev = process.env.NODE_ENV === 'development';
 
 
@@ -132,7 +133,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       // if (initialState?.loading) return <PageLoading />;
       return (
         <>
-          <Suspense fallback={<div>loading...</div>}>{children}</Suspense>
+          {children}
         </>
       );
     },
